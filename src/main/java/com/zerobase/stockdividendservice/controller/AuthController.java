@@ -1,5 +1,5 @@
 package com.zerobase.stockdividendservice.controller;
 
-public class Controller {
+public class AuthController {
 
 }
