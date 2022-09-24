@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class Dividend {
 
-	private LocalDateTime data;
+	private LocalDateTime date;
 	private String dividend;
 
 }
