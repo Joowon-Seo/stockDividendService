@@ -10,6 +10,7 @@ import com.zerobase.stockdividendservice.scraper.Scraper;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.Trie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import org.springframework.util.ObjectUtils;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CompanyService {
 
 	private final Trie trie;
@@ -59,6 +61,17 @@ public class CompanyService {
 
 		this.dividendRepository.saveAll(dividendEntities);
 		return company;
+	}
+
+	public String deleteCompany(String ticker) {
+		var company = this.companyRepository.findByTicker(ticker)
+			.orElseThrow(() -> new RuntimeException("존재하지 않는 회사입니다."));
+		this.dividendRepository.deleteAllByCompanyId(company.getId());
+		log.info("Success Delete Dividend By Company");
+		companyRepository.delete(company);
+		log.info("Success Delete Company");
+		this.deleteAutocompleteKeyword(company.getName());
+		return company.getName();
 	}
 
 	public List<String> getCompanyNamesByKeyword(String keyword) {
