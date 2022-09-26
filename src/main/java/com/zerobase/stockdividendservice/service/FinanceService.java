@@ -10,9 +10,10 @@ import com.zerobase.stockdividendservice.psersist.entity.DividendEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 @AllArgsConstructor
 public class FinanceService {
@@ -22,8 +23,9 @@ public class FinanceService {
 
 	// 요청이 자주 들어오는가?
 	// 자주 변경되는 데이터 인가?
-	@Cacheable(key = "#companyName", value = "finance")
+	@Cacheable(key = "#companyName", value = "finance") // cache에 데이터가 없을 때만 아래 로직을 수행하게 하는 annotation
 	public ScrapedResult getDividendByCompanyName(String companyName) {
+		log.info("search company -> " + companyName);
 
 		// 1. 회사명을 기준으로 회사 정보를 조회
 		CompanyEntity company = this.companyRepository.findByName(companyName)
