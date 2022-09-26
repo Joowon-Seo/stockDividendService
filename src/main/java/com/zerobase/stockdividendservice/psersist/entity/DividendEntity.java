@@ -2,6 +2,7 @@ package com.zerobase.stockdividendservice.psersist.entity;
 
 import com.zerobase.stockdividendservice.model.Dividend;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +23,10 @@ public class DividendEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(unique = true)
 	private Long companyId;
 
+	@Column(unique = true)
 	private LocalDateTime date;
 
 	private String dividend;
