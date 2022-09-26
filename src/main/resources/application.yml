@@ -19,3 +19,7 @@ spring:
     url: jdbc:h2:mem:zerobase;DB_CLOSE_DELAY=-1
     username: host
     password:
+
+scheduler:
+  scrap:
+    yahoo: 0 0 0 * * *
